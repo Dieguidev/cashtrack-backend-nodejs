@@ -1,20 +1,35 @@
 
-export class CreateBudgetDto {
 
+
+export class RegisterUserDto {
   private constructor(
-    public email: string,
-    public password: string,
-  ) { }
+    public name: string,
+    public amount: number,
+  ) {}
 
-  static create(object: { [key: string]: any }): [string?, CreateBudgetDto?] {
-    const { email, password } = object;
+  static create(object: {
+    [key: string]: any;
+  }): [{ [key: string]: string }?, RegisterUserDto?] {
+    const { name, amount } = object;
 
-    if (!email) return ['Missing email'];
-    if(!Validators.email.test(email)) return ['Invalid email'];
-    if (!password) return ['Missing password'];
+    const errors: { [key: string]: string } = {};
+
+    if (!name) errors.name = 'Missing name';
+    if (!amount) errors.amount = 'Missing amount';
+    if (typeof amount !== 'number') errors.amount = 'Amount must be a number';
+    if (amount <= 0) errors.amount = 'Amount must be greater than 0';
+
+    if (Object.keys(errors).length > 0) {
+      return [errors];
+    }
 
 
-    return [undefined, new CreateBudgetDto( email.toLowerCase(), password)];
-
+    return [
+      undefined,
+      new RegisterUserDto(
+        name,
+        amount
+      ),
+    ];
   }
 }
