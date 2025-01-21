@@ -9,9 +9,9 @@ export class BudgetRoutes {
     const budgetService = new Budgetservice();
     const controller = new BudgetController(budgetService);
 
-    router.get('/', controller.getAllBudgets);
     router.post('/', controller.createBudget);
-
+    router.get('/', controller.getAllBudgets);
+    router.get('/:id', controller.getBudgetById);
     return router;
 
   }

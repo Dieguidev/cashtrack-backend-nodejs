@@ -1,11 +1,11 @@
 import { UUIDAdapter } from '../../../config';
 
-export class getBudgetByIdDto {
+export class GetBudgetByIdDto {
   private constructor(public id: string) {}
 
   static create(object: {
     [key: string]: any;
-  }): [{ [key: string]: string }?, getBudgetByIdDto?] {
+  }): [{ [key: string]: string }?, GetBudgetByIdDto?] {
     const { id } = object;
 
     const errors: { [key: string]: string } = {};
@@ -19,6 +19,6 @@ export class getBudgetByIdDto {
       return [errors];
     }
 
-    return [undefined, new getBudgetByIdDto(id)];
+    return [undefined, new GetBudgetByIdDto(id)];
   }
 }
