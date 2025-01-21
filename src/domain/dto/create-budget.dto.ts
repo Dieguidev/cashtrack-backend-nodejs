@@ -1,15 +1,9 @@
-
-
-
-export class RegisterUserDto {
-  private constructor(
-    public name: string,
-    public amount: number,
-  ) {}
+export class CreaateBudgetDto {
+  private constructor(public name: string, public amount: number) {}
 
   static create(object: {
     [key: string]: any;
-  }): [{ [key: string]: string }?, RegisterUserDto?] {
+  }): [{ [key: string]: string }?, CreaateBudgetDto?] {
     const { name, amount } = object;
 
     const errors: { [key: string]: string } = {};
@@ -23,13 +17,6 @@ export class RegisterUserDto {
       return [errors];
     }
 
-
-    return [
-      undefined,
-      new RegisterUserDto(
-        name,
-        amount
-      ),
-    ];
+    return [undefined, new CreaateBudgetDto(name, amount)];
   }
 }

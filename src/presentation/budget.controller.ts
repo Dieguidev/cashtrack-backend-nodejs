@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CustomError } from "../domain";
+import { CreaateBudgetDto, CustomError } from "../domain";
 import { Budgetservice } from "./budgets.service";
 
 export class BudgetController {
@@ -15,10 +15,22 @@ export class BudgetController {
     return res.status(500).json({ error: 'Internal Server Error' });
   };
 
-  getAllBudgets = async (req: Request, res: Response) => {
+  getAllBudgets = (req: Request, res: Response) => {
     this.budgetService
       .getAllBudgets()
       .then((budgets) => res.json(budgets))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  createBudget = (req: Request, res: Response) => {
+    const [error, creaateBudgetDto] = CreaateBudgetDto.create(req.body);
+    if (error) {
+      res.status(400).json({ error });
+      return;
+    }
+    this.budgetService
+      .createBudget(creaateBudgetDto!)
+      .then((budget) => res.json(budget))
       .catch((error) => this.handleError(error, res));
   };
 }

@@ -1,5 +1,5 @@
 import { prisma } from "../data/prisma/prisma-db"
-import { BudgetEntity } from "../domain";
+import { BudgetEntity, CreaateBudgetDto } from "../domain";
 
 export class Budgetservice {
   async getAllBudgets(){
@@ -10,5 +10,10 @@ export class Budgetservice {
     return budgetsEntity;
   }
 
-
+  async createBudget(createBudgetDto: CreaateBudgetDto){
+    const budget = await prisma.budget.create({
+      data: createBudgetDto
+    })
+    return BudgetEntity.fromJson(budget)
+  }
 }
