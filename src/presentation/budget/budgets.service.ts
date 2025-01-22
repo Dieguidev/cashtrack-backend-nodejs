@@ -15,7 +15,10 @@ export class Budgetservice {
     return BudgetEntity.fromJson(budget);
   }
   async getAllBudgets() {
-    const budgets = await prisma.budget.findMany();
+    const budgets = await prisma.budget.findMany({
+      orderBy: { createdAt: 'desc' },
+      // TODO: filtrar por usuario
+    });
     const budgetsEntity = budgets.map((budget) =>
       BudgetEntity.fromJson(budget)
     );
