@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreaateBudgetDto, CustomError, GetBudgetByIdDto } from '../domain';
+import { CreaateBudgetDto, CustomError, GetBudgetByIdDto } from '../../domain';
 import { Budgetservice } from './budgets.service';
 
 export class BudgetController {

@@ -9,6 +9,7 @@ export class CreaateBudgetDto {
     const errors: { [key: string]: string } = {};
 
     if (!name) errors.name = 'Missing name';
+    if (name && typeof name !== 'string') errors.name = 'Name must be a string';
     if (!amount) errors.amount = 'Missing amount';
     if (typeof amount !== 'number') errors.amount = 'Amount must be a number';
     if (amount <= 0) errors.amount = 'Amount must be greater than 0';

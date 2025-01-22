@@ -1,10 +1,10 @@
-import { prisma } from '../data/prisma/prisma-db';
+import { prisma } from '../../data/prisma/prisma-db';
 import {
   BudgetEntity,
   CreaateBudgetDto,
   CustomError,
   GetBudgetByIdDto,
-} from '../domain';
+} from '../../domain';
 
 export class Budgetservice {
   async createBudget(createBudgetDto: CreaateBudgetDto) {
