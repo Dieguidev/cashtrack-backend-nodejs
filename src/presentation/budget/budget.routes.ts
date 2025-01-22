@@ -12,6 +12,8 @@ export class BudgetRoutes {
     router.post('/', controller.createBudget);
     router.get('/', controller.getAllBudgets);
     router.get('/:id', controller.getBudgetById);
+    router.put('/:id', controller.updateBudget);
+    router.delete('/:id', controller.deleteBudget);
     return router;
 
   }

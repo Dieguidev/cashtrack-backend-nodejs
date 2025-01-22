@@ -1,6 +1,6 @@
 import { UUIDAdapter } from '../../../config';
 
-export class GetBudgetByIdDto {
+export class UpdateBudgetDto {
   private constructor(
     public id: string,
     public name?: string,
@@ -9,7 +9,7 @@ export class GetBudgetByIdDto {
 
   static create(object: {
     [key: string]: any;
-  }): [{ [key: string]: string }?, GetBudgetByIdDto?] {
+  }): [{ [key: string]: string }?, UpdateBudgetDto?] {
     const { id, name, amount } = object;
 
     const errors: { [key: string]: string } = {};
@@ -30,6 +30,6 @@ export class GetBudgetByIdDto {
       return [errors];
     }
 
-    return [undefined, new GetBudgetByIdDto(id, name, amount)];
+    return [undefined, new UpdateBudgetDto(id, name, amount)];
   }
 }
