@@ -7,11 +7,13 @@ export class BudgetEntity {
     public readonly id: string,
     public readonly name: string,
     public readonly amount: number,
-    public readonly expenses: Expense[] = []
+    public readonly expenses: ExpenseEntity[] = [],
+    public readonly createdAt: Date,
+    public readonly updatedAt: Date
   ) {}
 
-  static fromJson(object:  { [key: string]: any } ): BudgetEntity {
-    const { id, name, amount, expenses } = object;
+  static fromJson(object: { [key: string]: any }): BudgetEntity {
+    const { id, name, amount, expenses, createdAt, updatedAt } = object;
 
     if (!id) throw CustomError.badRequest('Missing ID');
     if (!name) throw CustomError.badRequest('Missing name');
@@ -21,6 +23,13 @@ export class BudgetEntity {
       ? expenses.map((expense: Expense) => ExpenseEntity.fromJson(expense))
       : expenses;
 
-    return new BudgetEntity(id, name, amount, expensesFromJson);
+    return new BudgetEntity(
+      id,
+      name,
+      amount,
+      expensesFromJson,
+      createdAt,
+      updatedAt
+    );
   }
 }
