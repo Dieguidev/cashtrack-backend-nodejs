@@ -10,11 +10,13 @@ import {
 
 export class Budgetservice {
   async createBudget(createBudgetDto: CreaateBudgetDto) {
-    const budget = await prisma.budget.create({
-      data: createBudgetDto,
-    });
-    return BudgetEntity.fromJson(budget);
+    const { name, amount } = createBudgetDto;
+    // const budget = await prisma.budget.create({
+    //   data: { name, amount },
+    // });
+    // return BudgetEntity.fromJson(budget);
   }
+
   async getAllBudgets() {
     const budgets = await prisma.budget.findMany({
       orderBy: { createdAt: 'desc' },
