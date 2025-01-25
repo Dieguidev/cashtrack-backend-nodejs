@@ -7,7 +7,7 @@ export class AppRoutes {
   static get routes():Router {
     const router = Router();
 
-    router.use('/api/auth', AuthRoutes.routes)
+    router.use('/auth', AuthRoutes.routes)
     // router.use('/api/user', UserRoutes.routes)
     router.use('/budget', BudgetRoutes.router)
     router.use('/expense', ExpenseRoutes.router)
