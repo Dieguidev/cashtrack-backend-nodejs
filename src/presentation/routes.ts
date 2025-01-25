@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { BudgetRoutes } from "./budget/budget.routes";
+import { ExpenseRoutes } from "./expense/expense.routes";
 
 export class AppRoutes {
   static get routes():Router {
@@ -8,6 +9,7 @@ export class AppRoutes {
     // router.use('/api/auth', AuthRoutes.routes)
     // router.use('/api/user', UserRoutes.routes)
     router.use('/budget', BudgetRoutes.router)
+    router.use('/expense', ExpenseRoutes.router)
 
     router.get('/', (req, res) => {
       res.json({
