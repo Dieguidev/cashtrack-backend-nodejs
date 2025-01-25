@@ -47,4 +47,11 @@ export class ExpenseController {
       .then((expense) => res.json(expense))
       .catch((error) => this.handleError(error, res));
   }
+
+  deleteExpense = (req: Request, res: Response) => {
+    this.expenseService
+      .deleteExpense(req.expense!.id)
+      .then((expense) => res.json(expense))
+      .catch((error) => this.handleError(error, res));
+  }
 }

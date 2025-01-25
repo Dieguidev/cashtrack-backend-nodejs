@@ -30,4 +30,14 @@ export class ExpenseService {
 
     return ExpenseEntity.fromJson(expense)
   }
+
+  async deleteExpense(expenseId: string) {
+    const expense = await prisma.expense.delete({
+      where: {
+        id: expenseId,
+      },
+    });
+
+    return ExpenseEntity.fromJson(expense);
+  }
 }
