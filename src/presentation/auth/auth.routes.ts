@@ -24,6 +24,7 @@ export class AuthRoutes {
     router.post('/confirm-account', controller.confirmAccount);
     router.post('/forgot-password', controller.forgotPassword);
     router.post('/validate-reset-password-token', controller.validateTokenFromResetPassword);
+    router.post('/update-forgot-password/:token', controller.updateForgotPassword);
 
     return router;
   }

@@ -7,6 +7,7 @@ import {
   IEmail,
   LoginUserDto,
   RegisterUserDto,
+  UpdateForgotPsswordDto,
   ValidateTokenFromResetPasswordDto,
 } from '../../domain';
 import { UserEntity } from '../../domain/entities/user.entity';
@@ -130,9 +131,7 @@ export class AuthService {
         throw CustomError.badRequest('User not exist');
       }
 
-      const result = await prisma.$transaction(async (prisma)=> {
-
-
+      const result = await prisma.$transaction(async (prisma) => {
         const code = this.generateSixDigitCode();
         const updateUser = await prisma.user.update({
           where: {
@@ -149,7 +148,7 @@ export class AuthService {
           token: code,
         });
         return updateUser;
-      })
+      });
       return {
         user: UserEntity.fromJson(result),
       };
@@ -160,25 +159,63 @@ export class AuthService {
     }
   }
 
-  public async validateTokenFromResetPassword(validateTokenFromResetPasswordDto: ValidateTokenFromResetPasswordDto) {
+  public async validateTokenFromResetPassword(
+    validateTokenFromResetPasswordDto: ValidateTokenFromResetPasswordDto
+  ) {
     const { token } = validateTokenFromResetPasswordDto;
     try {
       const user = await prisma.user.findFirst({
         where: {
-          token
+          token,
         },
-      })
+      });
       if (!user) {
-        throw CustomError.badRequest('Invalid token')
+        throw CustomError.badRequest('Invalid token');
       }
 
-      return 'Token is valid'
+      return 'Token is valid';
     } catch (error) {
       console.log(error);
       if (error instanceof CustomError) {
         throw error;
       }
-      throw CustomError.internalServer(`${error}`)
+      throw CustomError.internalServer(`${error}`);
+    }
+  }
+
+  public async updateForgotPasswordWithToken(
+    updateForgotPssword: UpdateForgotPsswordDto
+  ) {
+    const { token, password } = updateForgotPssword;
+
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          token,
+        },
+      });
+
+      if (!user) {
+        throw CustomError.badRequest('Invalid token');
+      }
+
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          password: this.hashPassword(password),
+          token: null,
+        },
+      });
+
+      return 'Password updated';
+    } catch (error) {
+      console.log(error);
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      throw CustomError.internalServer(`${error}`);
     }
   }
 
