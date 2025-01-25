@@ -9,7 +9,6 @@ export class UserEntity {
     public readonly email: string,
     public readonly confirmed: boolean,
     public readonly budgets: Budget[] = [],
-    public readonly token?: string
   ) {}
 
   static fromJson(object: { [key: string]: any }): UserEntity {
@@ -24,6 +23,6 @@ export class UserEntity {
       : budgets;
 
 
-    return new UserEntity(id, name, email, confirmed, budgetsFromJson, token);
+    return new UserEntity(id, name, email, confirmed, budgetsFromJson);
   }
 }
