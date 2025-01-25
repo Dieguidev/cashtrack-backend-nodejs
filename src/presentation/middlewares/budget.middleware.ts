@@ -18,20 +18,20 @@ export class BudgetMiddleware {
     res: Response,
     next: NextFunction
   ) => {
-    const { id } = req.params;
-    if (!id) {
+    const { budgetId } = req.params;
+    if (!budgetId) {
       res.status(400).json({ error: 'Missing id' });
       return;
     }
 
-    if (!UUIDAdapter.validate(id)) {
+    if (!UUIDAdapter.validate(budgetId)) {
       res.status(400).json({ error: 'Invalid Id' });
       return;
     }
     try {
       const budget = await prisma.budget.findUnique({
         where: {
-          id,
+          id: budgetId,
         },
       });
 
