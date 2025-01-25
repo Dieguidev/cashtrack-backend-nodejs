@@ -7,6 +7,7 @@ import {
   IEmail,
   LoginUserDto,
   RegisterUserDto,
+  ValidateTokenFromResetPasswordDto,
 } from '../../domain';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { EmailService } from '../email/email.service';
@@ -156,6 +157,28 @@ export class AuthService {
       if (error instanceof CustomError) {
         throw error;
       }
+    }
+  }
+
+  public async validateTokenFromResetPassword(validateTokenFromResetPasswordDto: ValidateTokenFromResetPasswordDto) {
+    const { token } = validateTokenFromResetPasswordDto;
+    try {
+      const user = await prisma.user.findFirst({
+        where: {
+          token
+        },
+      })
+      if (!user) {
+        throw CustomError.badRequest('Invalid token')
+      }
+
+      return 'Token is valid'
+    } catch (error) {
+      console.log(error);
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      throw CustomError.internalServer(`${error}`)
     }
   }
 
