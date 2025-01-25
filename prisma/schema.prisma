@@ -14,9 +14,21 @@ datasource db {
 }
 
 model Budget {
+  id        String    @id @default(uuid())
+  name      String
+  amount    Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Expense   Expense[]
+}
+
+model Expense {
   id        String   @id @default(uuid())
   name      String
   amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  budget   Budget @relation(fields: [budgetId], references: [id])
+  budgetId String
 }
