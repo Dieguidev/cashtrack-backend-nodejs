@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateExpenseDto, CustomError } from '../../domain';
+import { CreateExpenseDto, CustomError, UpdateExpenseDto } from '../../domain';
 import { ExpenseService } from './expense.service';
 
 export class ExpenseController {
@@ -31,6 +31,19 @@ export class ExpenseController {
   getById = (req: Request, res: Response) => {
     this.expenseService
       .getExpenseByid(req.expense!)
+      .then((expense) => res.json(expense))
+      .catch((error) => this.handleError(error, res));
+  }
+
+  updateExpense = (req: Request, res: Response) => {
+    const [error, updateExpenseDto] = UpdateExpenseDto.create(req.body);
+    if (error) {
+      res.status(400).json({ error });
+      return;
+    }
+
+    this.expenseService
+      .updateExpense(req.expense!.id, updateExpenseDto!)
       .then((expense) => res.json(expense))
       .catch((error) => this.handleError(error, res));
   }
