@@ -33,6 +33,9 @@ export class BudgetMiddleware {
         where: {
           id: budgetId,
         },
+        include: {
+          Expense: true,
+        }
       });
 
       if (!budget) {
@@ -41,7 +44,6 @@ export class BudgetMiddleware {
       }
 
       req.budget = budget;
-      console.log(req.budget);
 
       next();
     } catch (error) {
