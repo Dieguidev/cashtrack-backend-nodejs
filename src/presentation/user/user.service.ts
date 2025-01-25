@@ -5,5 +5,7 @@ export class UserService {
   async getUserByJWT(user:User) {
     return UserEntity.fromJson(user);
   }
+
+  // async updatePassword()
 }
 
