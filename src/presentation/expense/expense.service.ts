@@ -1,5 +1,5 @@
 import { prisma } from '../../data/prisma/prisma-db';
-import { CreateExpenseDto } from '../../domain';
+import { CreateExpenseDto, ExpenseEntity } from '../../domain';
 
 export class ExpenseService {
   async createExpense(budgetId: string, createExpenseDto: CreateExpenseDto) {
@@ -8,8 +8,10 @@ export class ExpenseService {
       data: {
         amount,
         name,
-        budgetId
-      }
-    })
+        budgetId,
+      },
+    });
+
+    return ExpenseEntity.fromJson(newExpense);
   }
 }
