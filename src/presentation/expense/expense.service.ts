@@ -1,6 +1,6 @@
 import { Expense } from '@prisma/client';
 import { prisma } from '../../data/prisma/prisma-db';
-import { CreateExpenseDto, ExpenseEntity } from '../../domain';
+import { CreateExpenseDto, ExpenseEntity, UpdateExpenseDto } from '../../domain';
 
 export class ExpenseService {
   async createExpense(budgetId: string, createExpenseDto: CreateExpenseDto) {
@@ -17,6 +17,17 @@ export class ExpenseService {
   }
 
   async getExpenseByid(expense: Expense) {
-      return ExpenseEntity.fromJson(expense);
-    }
+    return ExpenseEntity.fromJson(expense);
+  }
+
+  async updateExpense(expenseId: string, updateExpenseDto: UpdateExpenseDto) {
+    const expense =await  prisma.expense.update({
+      where: {
+        id: expenseId,
+      },
+      data: updateExpenseDto,
+    });
+
+    return ExpenseEntity.fromJson(expense)
+  }
 }

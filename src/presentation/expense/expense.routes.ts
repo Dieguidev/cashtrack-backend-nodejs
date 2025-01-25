@@ -16,6 +16,7 @@ export class ExpenseRoutes {
 
     router.post('/budget/:budgetId', controller.createExpense);
     router.get('/:expenseId/budget/:budgetId', controller.getById);
+    router.patch('/:expenseId/budget/:budgetId', controller.updateExpense);
 
     return router;
   }
