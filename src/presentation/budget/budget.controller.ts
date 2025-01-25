@@ -40,7 +40,7 @@ export class BudgetController {
 
   getBudgetById = (req: Request, res: Response) => {
     this.budgetService
-      .getBudgetById(req.budget!, req.user?.id!)
+      .getBudgetById(req.budget!)
       .then((budget) => res.json(budget))
       .catch((error) => this.handleError(error, res));
   };
