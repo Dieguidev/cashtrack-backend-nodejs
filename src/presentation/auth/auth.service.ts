@@ -3,6 +3,7 @@ import { BcryptAdapter, JwtAdapter } from '../../config';
 import {
   ConfirmSixDigitCodeDto,
   CustomError,
+  ForgotPasswordDto,
   IEmail,
   LoginUserDto,
   RegisterUserDto,
@@ -117,6 +118,71 @@ export class AuthService {
         throw error;
       }
       throw CustomError.internalServer(`${error}`);
+    }
+  }
+
+  async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
+    const { email } = forgotPasswordDto;
+    try {
+      const existUser = await prisma.user.findUnique({ where: { email } });
+      if (!existUser) {
+        throw CustomError.badRequest('User not exist');
+      }
+
+      const result = await prisma.$transaction(async (prisma)=> {
+
+
+        const code = this.generateSixDigitCode();
+        const updateUser = await prisma.user.update({
+          where: {
+            id: existUser.id,
+          },
+          data: {
+            token: code,
+          },
+        });
+
+        await this.sendEmaiForgotPassword({
+          email: existUser.email,
+          name: existUser.name,
+          token: code,
+        });
+        return updateUser;
+      })
+      return {
+        user: UserEntity.fromJson(result),
+      };
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+    }
+  }
+
+  private async sendEmaiForgotPassword(user: IEmail) {
+    const html = `
+      <h1>Valida tu email</h1>
+      <p>Hola: ${user.name}, has solicitado reestablecer tu password.</p>
+      <p>Visita el siguiente enlace:</p>
+      <p>Ingresa el código: <b>${user.token}</b></p>
+      <p>Exte token expira en 10 minutos</p>
+      `;
+    // <a href="${envs.FRONTEND_URL}/auth/new-password">Reestablecer Password</a>
+
+    const options = {
+      to: user.email,
+      subject: 'Restablece tu password',
+      html,
+    };
+
+    try {
+      const isSent = await this.emailservice.sendEmail(options);
+      if (!isSent) {
+        throw new Error('Error sending email');
+      }
+    } catch (error: any) {
+      console.log(error);
+      throw CustomError.internalServer('Error sending email');
     }
   }
 
