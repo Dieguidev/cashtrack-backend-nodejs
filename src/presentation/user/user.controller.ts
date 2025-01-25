@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CustomError } from '../../domain';
+import { CustomError, UpdateCurrentUserPasswordDto } from '../../domain';
 import { UserService } from './user.service';
 
 export class UserController {
@@ -22,4 +22,16 @@ export class UserController {
         .then((user) => res.json(user))
         .catch((error) => this.handleError(error, res));
   };
+
+  updateCurrentUserPassword = (req: Request, res: Response) => {
+    const [error, updateCurrentUserPasswordDto] = UpdateCurrentUserPasswordDto.create(req.body)
+    if (error) {
+      res.status(400).json({ error })
+      return
+    }
+
+    this.userService.updateCurrentUserPassword(updateCurrentUserPasswordDto!, req.user!)
+      .then((user) => res.json(user))
+      .catch((error) => this.handleError(error, res));
+  }
 }

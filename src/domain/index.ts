@@ -2,6 +2,7 @@ export * from './errors/custom.error';
 
 export * from './entities/budget.entity';
 export * from './entities/expense.entity';
+export * from './entities/user.entity';
 
 export * from './interfaces/email.interface';
 
@@ -18,3 +19,4 @@ export * from './dto/auth/validate-six-digit-code.dto';
 export * from './dto/auth/forgot-password.dto';
 export * from './dto/auth/validate-code-from-reset-password.dt';
 export * from './dto/auth/update-forgot-password.dto';
+export * from './dto/user/update-current-user-password.dto';
