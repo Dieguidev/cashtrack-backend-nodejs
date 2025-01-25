@@ -1,0 +1,72 @@
+import { UUIDAdapter } from '../../../../src/config/adapters/uuid';
+export const budgets = [
+  {
+    id: "826f3d07-8dd8-4269-8144-ce4895928b19",
+    name: 'Graduación',
+    amount: 1000,
+    userId: "0bb3bc37-7d60-45eb-94ee-877aaed77624",
+    createdAt: '2030-06-12T20:43:48.877Z',
+    updatedAt: '2030-06-12T20:43:48.877Z',
+    expenses: [
+      {
+        id: UUIDAdapter.generate(),
+        name: 'Limosina',
+        amount: 300,
+        budgetId: "826f3d07-8dd8-4269-8144-ce4895928b19",
+        createdAt: '2030-06-17T17:20:57.138Z',
+        updatedAt: '2030-06-17T17:20:57.138Z',
+      },
+      {
+        id: UUIDAdapter.generate(),
+        name: 'Fotos',
+        amount: 400,
+        budgetId: "826f3d07-8dd8-4269-8144-ce4895928b19",
+        createdAt: '2030-06-17T17:21:03.077Z',
+        updatedAt: '2030-06-17T17:21:03.077Z',
+      },
+      {
+        id: UUIDAdapter.generate(),
+        name: 'Viaje',
+        amount: 200,
+        budgetId: "826f3d07-8dd8-4269-8144-ce4895928b19",
+        createdAt: '2030-06-17T17:21:07.854Z',
+        updatedAt: '2030-06-17T17:21:07.854Z',
+      },
+    ],
+  },
+  {
+    id: "a743d798-3d9d-4725-bb8a-ba44f42fcaa3",
+    name: 'Gastos Semana',
+    amount: 400,
+    userId: "0bb3bc37-7d60-45eb-94ee-877aaed77624",
+    createdAt: '2030-06-12T20:43:48.877Z',
+    updatedAt: '2030-06-12T20:43:48.877Z',
+    expenses: [
+      {
+        id: UUIDAdapter.generate(),
+        name: 'Transporte',
+        amount: 100,
+        createdAt: '2030-06-17T17:20:57.138Z',
+        updatedAt: '2030-06-17T17:20:57.138Z',
+        budgetId: "a743d798-3d9d-4725-bb8a-ba44f42fcaa3",
+      },
+      {
+        id: UUIDAdapter.generate(),
+        name: 'Vísita Doctor',
+        amount: 200,
+        createdAt: '2030-06-17T17:21:03.077Z',
+        updatedAt: '2030-06-17T17:21:03.077Z',
+        budgetId: "a743d798-3d9d-4725-bb8a-ba44f42fcaa3",
+      },
+    ],
+  },
+  {
+    id: UUIDAdapter.generate(),
+    name: 'Gastos ',
+    amount: 400,
+    userId: "bf0961aa-37fb-4fd0-bd63-b205fd059c78",
+    createdAt: '2030-06-12T20:43:48.877Z',
+    updatedAt: '2030-06-12T20:43:48.877Z',
+    expenses: [],
+  },
+];
