@@ -10,7 +10,7 @@ export class BudgetEntity {
     public readonly expenses: Expense[] = []
   ) {}
 
-  static fromJson(object: { [key: string]: any }): BudgetEntity {
+  static fromJson(object:  { [key: string]: any } ): BudgetEntity {
     const { id, name, amount, expenses } = object;
 
     if (!id) throw CustomError.badRequest('Missing ID');
