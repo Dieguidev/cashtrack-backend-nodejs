@@ -9,18 +9,18 @@ import {
 } from '../../domain';
 
 export class Budgetservice {
-  async createBudget(createBudgetDto: CreaateBudgetDto) {
+  async createBudget(createBudgetDto: CreaateBudgetDto, userId: string) {
     const { name, amount } = createBudgetDto;
-    // const budget = await prisma.budget.create({
-    //   data: { name, amount },
-    // });
-    // return BudgetEntity.fromJson(budget);
+    const budget = await prisma.budget.create({
+      data: { name, amount, userId },
+    });
+    return BudgetEntity.fromJson(budget);
   }
 
-  async getAllBudgets() {
+  async getAllBudgets(userId: string) {
     const budgets = await prisma.budget.findMany({
+      where: { userId },
       orderBy: { createdAt: 'desc' },
-      // TODO: filtrar por usuario
     });
     const budgetsEntity = budgets.map((budget) =>
       BudgetEntity.fromJson(budget)
@@ -28,7 +28,10 @@ export class Budgetservice {
     return budgetsEntity;
   }
 
-  async getBudgetById(budget: Budget) {
+  async getBudgetById(budget: Budget, userId: string) {
+    if (budget.userId !== userId) {
+      throw CustomError.unauthorized('You are not authorized to view this budget');
+    }
     return BudgetEntity.fromJson(budget);
   }
 
