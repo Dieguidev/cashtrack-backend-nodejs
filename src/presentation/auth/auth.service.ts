@@ -69,7 +69,6 @@ export class AuthService {
       throw CustomError.unauthorized('Invalid credentials');
     }
 
-    //ismatch ..bcrypt
     const isMatchPassword = this.comparePassword(password, user.password);
     if (!isMatchPassword) {
       throw CustomError.unauthorized('Invalid credentials');
