@@ -28,10 +28,7 @@ export class Budgetservice {
     return budgetsEntity;
   }
 
-  async getBudgetById(budget: Budget, userId: string) {
-    if (budget.userId !== userId) {
-      throw CustomError.unauthorized('You are not authorized to view this budget');
-    }
+  async getBudgetById(budget: Budget) {
     return BudgetEntity.fromJson(budget);
   }
 
