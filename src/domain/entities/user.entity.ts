@@ -18,7 +18,6 @@ export class UserEntity {
     if (!id) throw CustomError.badRequest('Missing ID');
     if (!name) throw CustomError.badRequest('Missing name');
     if(!email) throw CustomError.badRequest('Missing email');
-    if (!confirmed) throw CustomError.badRequest('Missing confirmed');
 
     const budgetsFromJson = budgets
       ? budgets.map((budget: Budget) => BudgetEntity.fromJson(budget))

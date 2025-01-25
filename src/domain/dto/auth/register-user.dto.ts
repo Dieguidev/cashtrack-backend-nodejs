@@ -16,10 +16,12 @@ export class RegisterUserDto {
     const errors: { [key: string]: string } = {};
 
     if (!name) errors.name = 'Missing name';
+    if (name && typeof name !== 'string') errors.name = 'Invalid name - must be a string';
     if (!email) errors.email = 'Missing email';
     if (email && !Validators.email.test(email)) errors.email = 'Invalid email';
     if (!password) errors.password = 'Missing password';
-    if (password && password.length < 6)
+    if (password && typeof password !== 'string') errors.password = 'Invalid password - must be a string';
+    if (password && password.length < 8)
       errors.password = 'Password must be at least 6 characters';
     if (!passwordConfirmation)
       errors.passwordConfirmation = 'Missing password confirmation';
