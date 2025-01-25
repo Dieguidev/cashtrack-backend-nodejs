@@ -10,13 +10,13 @@ export class BudgetRoutes {
     const budgetService = new Budgetservice();
     const controller = new BudgetController(budgetService);
 
-    router.param('id', BudgetMiddleware.budgetExists);
+    router.param('budgetId', BudgetMiddleware.budgetExists);
 
     router.post('/', controller.createBudget);
     router.get('/', controller.getAllBudgets);
-    router.get('/:id', controller.getBudgetById);
-    router.put('/:id', controller.updateBudget);
-    router.delete('/:id', controller.deleteBudget);
+    router.get('/:budgetId', controller.getBudgetById);
+    router.put('/:budgetId', controller.updateBudget);
+    router.delete('/:budgetId', controller.deleteBudget);
     return router;
   }
 }

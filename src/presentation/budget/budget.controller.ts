@@ -39,6 +39,8 @@ export class BudgetController {
   };
 
   getBudgetById = (req: Request, res: Response) => {
+
+
     this.budgetService
       .getBudgetById(req.budget!)
       .then((budget) => res.json(budget))

@@ -1,49 +1,49 @@
 import { Request, Response, NextFunction } from 'express';
 import { UUIDAdapter } from '../../config';
 import { prisma } from '../../data/prisma/prisma-db';
-import { Budget } from '@prisma/client';
+import { Budget, Expense } from '@prisma/client';
 
 declare global {
   namespace Express {
     interface Request {
-      budget?: Budget;
+      expense?: Expense;
     }
   }
 }
 
-export class BudgetMiddleware {
-  static budgetExists = async (
+export class ExpenseMiddleware {
+  static expenseExists = async (
     req: Request,
     res: Response,
     next: NextFunction
   ) => {
-    const { budgetId } = req.params;
-    if (!budgetId) {
+    const { expenseId, budgetId } = req.params;
+    if (!expenseId) {
       res.status(400).json({ error: 'Missing id' });
       return;
     }
 
-    if (!UUIDAdapter.validate(budgetId)) {
+    if (!UUIDAdapter.validate(expenseId)) {
       res.status(400).json({ error: 'Invalid Id' });
       return;
     }
     try {
-      const budget = await prisma.budget.findUnique({
+      const expense = await prisma.expense.findUnique({
         where: {
-          id: budgetId,
+          id: expenseId,
         },
-        include: {
-          expenses: true,
-        }
       });
 
-      if (!budget) {
-        res.status(404).json({ error: 'Budget not found' });
+      if (!expense) {
+        res.status(404).json({ error: 'Expense not found' });
+        return;
+      }
+      if (expense.budgetId !== budgetId) {
+        res.status(403).json({ error: 'Expense does not belong to the budget' });
         return;
       }
 
-
-      req.budget = budget;
+      req.expense = expense;
 
       next();
     } catch (error) {
