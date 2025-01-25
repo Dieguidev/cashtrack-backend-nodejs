@@ -34,7 +34,7 @@ export class BudgetMiddleware {
           id: budgetId,
         },
         include: {
-          Expense: true,
+          expenses: true,
         }
       });
 
@@ -42,6 +42,7 @@ export class BudgetMiddleware {
         res.status(404).json({ error: 'Budget not found' });
         return;
       }
+
 
       req.budget = budget;
 
