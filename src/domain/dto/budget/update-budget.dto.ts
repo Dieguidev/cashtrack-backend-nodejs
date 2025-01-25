@@ -24,7 +24,7 @@ export class UpdateBudgetDto {
     }
     if (amount && typeof amount !== 'number')
       errors.amount = 'Amount must be a number';
-    if (amount && amount <= 0) errors.amount = 'Amount must be greater than 0';
+    if (amount <= 0) errors.amount = 'Amount must be greater than 0';
 
     if (Object.keys(errors).length > 0) {
       return [errors];
