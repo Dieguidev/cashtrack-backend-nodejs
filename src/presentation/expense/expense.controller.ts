@@ -51,7 +51,7 @@ export class ExpenseController {
   deleteExpense = (req: Request, res: Response) => {
     this.expenseService
       .deleteExpense(req.expense!.id)
-      .then((expense) => res.json(expense))
+      .then((expense) => res.json({ message: 'Expense deleted' }))
       .catch((error) => this.handleError(error, res));
   }
 }
