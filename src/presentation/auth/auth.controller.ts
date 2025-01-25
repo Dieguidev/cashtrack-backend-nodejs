@@ -1,5 +1,13 @@
 import { Request, Response } from 'express';
-import { ConfirmSixDigitCodeDto, CustomError, ForgotPasswordDto, LoginUserDto, RegisterUserDto, ValidateTokenFromResetPasswordDto } from '../../domain';
+import {
+  ConfirmSixDigitCodeDto,
+  CustomError,
+  ForgotPasswordDto,
+  LoginUserDto,
+  RegisterUserDto,
+  UpdateForgotPsswordDto,
+  ValidateTokenFromResetPasswordDto,
+} from '../../domain';
 import { AuthService } from './auth.service';
 
 export class AuthController {
@@ -42,38 +50,61 @@ export class AuthController {
   };
 
   confirmAccount = (req: Request, res: Response) => {
-    const [error, confirmSixDigitCodeDto] = ConfirmSixDigitCodeDto.create(req.body)
+    const [error, confirmSixDigitCodeDto] = ConfirmSixDigitCodeDto.create(
+      req.body
+    );
     if (error) {
       res.status(400).json({ error });
       return;
     }
 
-    this.authService.confirmSixDigitToken(confirmSixDigitCodeDto!)
+    this.authService
+      .confirmSixDigitToken(confirmSixDigitCodeDto!)
       .then((user) => res.json(user))
       .catch((error) => this.handleError(error, res));
-  }
+  };
 
   forgotPassword = (req: Request, res: Response) => {
-    const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body)
+    const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body);
     if (error) {
-      res.status(400).json({ error })
-      return
+      res.status(400).json({ error });
+      return;
     }
 
-    this.authService.forgotPassword(forgotPasswordDto!)
+    this.authService
+      .forgotPassword(forgotPasswordDto!)
       .then((user) => res.json(user))
       .catch((error) => this.handleError(error, res));
-  }
+  };
 
   validateTokenFromResetPassword = (req: Request, res: Response) => {
-    const [error, validateTokenFromResetPasswordDto] = ValidateTokenFromResetPasswordDto.create(req.body)
+    const [error, validateTokenFromResetPasswordDto] =
+      ValidateTokenFromResetPasswordDto.create(req.body);
     if (error) {
-      res.status(400).json({ error })
-      return
+      res.status(400).json({ error });
+      return;
     }
 
-    this.authService.validateTokenFromResetPassword(validateTokenFromResetPasswordDto!)
+    this.authService
+      .validateTokenFromResetPassword(validateTokenFromResetPasswordDto!)
       .then((rpta) => res.json(rpta))
       .catch((error) => this.handleError(error, res));
-  }
+  };
+
+  updateForgotPassword = (req: Request, res: Response) => {
+    const { token } = req.params;
+    const [error, updateForgotPsswordDto] = UpdateForgotPsswordDto.create({
+      ...req.body,
+      token,
+    });
+    if (error) {
+      res.status(400).json({ error });
+      return;
+    }
+
+    this.authService
+      .updateForgotPasswordWithToken(updateForgotPsswordDto!)
+      .then((user) => res.json(user))
+      .catch((error) => this.handleError(error, res));
+  };
 }

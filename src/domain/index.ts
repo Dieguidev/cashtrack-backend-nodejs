@@ -17,3 +17,4 @@ export * from './dto/auth/register-user.dto';
 export * from './dto/auth/validate-six-digit-code.dto';
 export * from './dto/auth/forgot-password.dto';
 export * from './dto/auth/validate-code-from-reset-password.dt';
+export * from './dto/auth/update-forgot-password.dto';
