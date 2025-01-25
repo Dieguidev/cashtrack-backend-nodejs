@@ -62,22 +62,24 @@ export class AuthService {
     }
   }
 
-
-
   async loginUser(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      throw CustomError.badRequest('Invalid credentials');
+      throw CustomError.unauthorized('Invalid credentials');
     }
 
     //ismatch ..bcrypt
     const isMatchPassword = this.comparePassword(password, user.password);
     if (!isMatchPassword) {
-      throw CustomError.badRequest('Invalid credentials');
+      throw CustomError.unauthorized('Invalid credentials');
     }
 
-    const token = await this.generateTokenService(user.id);
+    if (!user.confirmed) {
+      throw CustomError.forbidden('Account not confirmed');
+    }
+
+    const token = await this.generateJWTService(user.id);
 
     return {
       user: UserEntity.fromJson(user),
@@ -85,41 +87,41 @@ export class AuthService {
     };
   }
 
-  public async confirmSixDigitToken(confirmSixDigitCodeDto: ConfirmSixDigitCodeDto) {
-
+  public async confirmSixDigitToken(
+    confirmSixDigitCodeDto: ConfirmSixDigitCodeDto
+  ) {
     try {
-
       const sixDigitTokenExists = await prisma.user.findFirst({
         where: {
-          token: confirmSixDigitCodeDto.token
-        }
-      })
+          token: confirmSixDigitCodeDto.token,
+        },
+      });
 
       if (!sixDigitTokenExists) {
-        throw CustomError.badRequest('Invalid token')
+        throw CustomError.badRequest('Invalid token');
       }
 
       const user = await prisma.user.update({
         where: {
-          id: sixDigitTokenExists.id
+          id: sixDigitTokenExists.id,
         },
         data: {
           confirmed: true,
-          token: null
-        }
-      })
+          token: null,
+        },
+      });
 
-      return user
+      return UserEntity.fromJson(user);
     } catch (error) {
       console.log(error);
       if (error instanceof CustomError) {
         throw error;
       }
-      throw CustomError.internalServer(`${error}`)
+      throw CustomError.internalServer(`${error}`);
     }
   }
 
-  private async generateTokenService(id: string) {
+  private async generateJWTService(id: string) {
     const token = await JwtAdapter.generateToken({ id }, '128d');
     if (!token) {
       throw CustomError.internalServer('Error generating token');
