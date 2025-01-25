@@ -13,6 +13,7 @@ export class LoginUserDto {
     if (!email) return ['Missing email'];
     if(!Validators.email.test(email)) return ['Invalid email'];
     if (!password) return ['Missing password'];
+    if (typeof password !== 'string') return ['Invalid password'];
 
 
 
