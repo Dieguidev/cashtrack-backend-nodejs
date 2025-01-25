@@ -17,7 +17,7 @@ export class ExpenseMiddleware {
     res: Response,
     next: NextFunction
   ) => {
-    const { expenseId } = req.params;
+    const { expenseId, budgetId } = req.params;
     if (!expenseId) {
       res.status(400).json({ error: 'Missing id' });
       return;
@@ -36,6 +36,10 @@ export class ExpenseMiddleware {
 
       if (!expense) {
         res.status(404).json({ error: 'Expense not found' });
+        return;
+      }
+      if (expense.budgetId !== budgetId) {
+        res.status(403).json({ error: 'Expense does not belong to the budget' });
         return;
       }
 
