@@ -59,15 +59,8 @@ export class BudgetController {
   };
 
   deleteBudget = (req: Request, res: Response) => {
-    const { id } = req.params;
-    const [error, getBudgetByIdDto] = GetBudgetByIdDto.create({ id });
-    if (error) {
-      res.status(400).json({ error });
-      return;
-    }
-
     this.budgetService
-      .deleteBudget(getBudgetByIdDto!)
+      .deleteBudget(req.budget?.id!)
       .then(() => res.json({ message: 'Budget deleted' }))
       .catch((error) => this.handleError(error, res));
   };

@@ -40,16 +40,9 @@ export class Budgetservice {
     return BudgetEntity.fromJson(budget);
   }
 
-  async deleteBudget(getBudgetByIdDto: GetBudgetByIdDto) {
-    const { id } = getBudgetByIdDto;
-    const budgetExists = await prisma.budget.findUnique({
-      where: { id },
-    });
-    if (!budgetExists) {
-      throw CustomError.notFound('Budget not found');
-    }
+  async deleteBudget(budgetId: string) {
     const budget = await prisma.budget.delete({
-      where: { id },
+      where: { id: budgetId },
     });
     return BudgetEntity.fromJson(budget);
   }
