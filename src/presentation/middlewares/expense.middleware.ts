@@ -11,8 +11,8 @@ declare global {
   }
 }
 
-export class BudgetMiddleware {
-  static budgetExists = async (
+export class ExpenseMiddleware {
+  static expenseExists = async (
     req: Request,
     res: Response,
     next: NextFunction
