@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ConfirmSixDigitCodeDto, CustomError, LoginUserDto, RegisterUserDto } from '../../domain';
+import { ConfirmSixDigitCodeDto, CustomError, ForgotPasswordDto, LoginUserDto, RegisterUserDto } from '../../domain';
 import { AuthService } from './auth.service';
 
 export class AuthController {
@@ -49,6 +49,18 @@ export class AuthController {
     }
 
     this.authService.confirmSixDigitToken(confirmSixDigitCodeDto!)
+      .then((user) => res.json(user))
+      .catch((error) => this.handleError(error, res));
+  }
+
+  forgotPassword = (req: Request, res: Response) => {
+    const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body)
+    if (error) {
+      res.status(400).json({ error })
+      return
+    }
+
+    this.authService.forgotPassword(forgotPasswordDto!)
       .then((user) => res.json(user))
       .catch((error) => this.handleError(error, res));
   }
