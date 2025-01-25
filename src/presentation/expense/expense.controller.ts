@@ -26,6 +26,12 @@ export class ExpenseController {
       .createExpense(req.budget?.id!, createExpenseDto!)
       .then((expense) => res.status(201).json(expense))
       .catch((error) => this.handleError(error, res));
-
   };
+
+  getById = (req: Request, res: Response) => {
+    this.expenseService
+      .getExpenseByid(req.expense!)
+      .then((expense) => res.json(expense))
+      .catch((error) => this.handleError(error, res));
+  }
 }

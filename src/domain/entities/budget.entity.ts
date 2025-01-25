@@ -17,9 +17,9 @@ export class BudgetEntity {
     if (!name) throw CustomError.badRequest('Missing name');
     if (!amount) throw CustomError.badRequest('Missing amount');
 
-    const expensesFromJson = expenses.map((expense: Expense) =>
-      ExpenseEntity.fromJson(expense)
-    );
+    const expensesFromJson = expenses
+      ? expenses.map((expense: Expense) => ExpenseEntity.fromJson(expense))
+      : expenses;
 
     return new BudgetEntity(id, name, amount, expensesFromJson);
   }
