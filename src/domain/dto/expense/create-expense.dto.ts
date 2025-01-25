@@ -1,9 +1,9 @@
-export class CreaateExpenseDto {
+export class CreateExpenseDto {
   private constructor(public name: string, public amount: number) {}
 
   static create(object: {
     [key: string]: any;
-  }): [{ [key: string]: string }?, CreaateExpenseDto?] {
+  }): [{ [key: string]: string }?, CreateExpenseDto?] {
     const { name, amount } = object;
 
     const errors: { [key: string]: string } = {};
@@ -18,6 +18,6 @@ export class CreaateExpenseDto {
       return [errors];
     }
 
-    return [undefined, new CreaateExpenseDto(name, amount)];
+    return [undefined, new CreateExpenseDto(name, amount)];
   }
 }
