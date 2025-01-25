@@ -34,14 +34,13 @@ export class BudgetMiddleware {
         },
         include: {
           expenses: true,
-        }
+        },
       });
 
       if (!budget) {
         res.status(404).json({ error: 'Budget not found' });
         return;
       }
-
 
       req.budget = budget;
 
@@ -51,5 +50,19 @@ export class BudgetMiddleware {
       res.status(200).json({ error: 'Internal server error' });
       return;
     }
+  };
+
+  static budegtBelongsToUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { budget, user } = req;
+    if (budget?.userId !== user?.id) {
+      res
+        .status(401)
+        .json({ error: 'You are not authorized to view this budget' });
+    }
+    next();
   };
 }

@@ -26,21 +26,19 @@ export class BudgetController {
       return;
     }
     this.budgetService
-      .createBudget(creaateBudgetDto!)
+      .createBudget(creaateBudgetDto!, req.user?.id!)
       .then((budget) => res.status(201).json(budget))
       .catch((error) => this.handleError(error, res));
   };
 
   getAllBudgets = (req: Request, res: Response) => {
     this.budgetService
-      .getAllBudgets()
+      .getAllBudgets(req.user?.id!)
       .then((budgets) => res.json(budgets))
       .catch((error) => this.handleError(error, res));
   };
 
   getBudgetById = (req: Request, res: Response) => {
-
-
     this.budgetService
       .getBudgetById(req.budget!)
       .then((budget) => res.json(budget))

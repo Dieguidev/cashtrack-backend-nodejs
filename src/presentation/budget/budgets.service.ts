@@ -9,16 +9,18 @@ import {
 } from '../../domain';
 
 export class Budgetservice {
-  async createBudget(createBudgetDto: CreaateBudgetDto) {
+  async createBudget(createBudgetDto: CreaateBudgetDto, userId: string) {
+    const { name, amount } = createBudgetDto;
     const budget = await prisma.budget.create({
-      data: createBudgetDto,
+      data: { name, amount, userId },
     });
     return BudgetEntity.fromJson(budget);
   }
-  async getAllBudgets() {
+
+  async getAllBudgets(userId: string) {
     const budgets = await prisma.budget.findMany({
+      where: { userId },
       orderBy: { createdAt: 'desc' },
-      // TODO: filtrar por usuario
     });
     const budgetsEntity = budgets.map((budget) =>
       BudgetEntity.fromJson(budget)
