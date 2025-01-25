@@ -27,6 +27,9 @@ export class Budgetservice {
   }
 
   async getBudgetById(budget: Budget) {
+    console.log(budget);
+
+
     return BudgetEntity.fromJson(budget);
   }
 
