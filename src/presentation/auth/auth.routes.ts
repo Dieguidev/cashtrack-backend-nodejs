@@ -23,6 +23,7 @@ export class AuthRoutes {
     router.post('/login', controller.loginUser);
     router.post('/confirm-account', controller.confirmAccount);
     router.post('/forgot-password', controller.forgotPassword);
+    router.post('/validate-reset-password-token', controller.validateTokenFromResetPassword);
 
     return router;
   }
