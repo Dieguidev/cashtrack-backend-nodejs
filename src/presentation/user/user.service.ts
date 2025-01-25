@@ -1,5 +1,5 @@
 import { User } from '@prisma/client';
-import { CustomError, UpdateCurrentUserPasswordDto, UserEntity } from '../../domain';
+import { CheckPasswordDto, CustomError, UpdateCurrentUserPasswordDto, UserEntity } from '../../domain';
 import { BcryptAdapter } from '../../config';
 import { prisma } from '../../data/prisma/prisma-db';
 
@@ -38,6 +38,24 @@ export class UserService {
       })
 
       return 'Password updated successfully'
+    } catch (error) {
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      throw CustomError.internalServer();
+    }
+  }
+
+  public async checkPassword(checkPasswordDto: CheckPasswordDto, user: User) {
+    const { password } = checkPasswordDto;
+
+    try {
+      const isMatchPassword = this.comparePassword(password, user!.password)
+      if (!isMatchPassword) {
+        throw CustomError.unauthorized('Current password does not match')
+      }
+
+      return 'Password match'
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
