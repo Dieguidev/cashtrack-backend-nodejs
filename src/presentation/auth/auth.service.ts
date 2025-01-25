@@ -1,6 +1,7 @@
 import { prisma } from '../../data/prisma/prisma-db';
 import { BcryptAdapter, JwtAdapter } from '../../config';
 import {
+  ConfirmSixDigitCodeDto,
   CustomError,
   IEmail,
   LoginUserDto,
@@ -61,6 +62,8 @@ export class AuthService {
     }
   }
 
+
+
   async loginUser(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
     const user = await prisma.user.findUnique({ where: { email } });
@@ -80,6 +83,40 @@ export class AuthService {
       user: UserEntity.fromJson(user),
       token,
     };
+  }
+
+  public async confirmSixDigitToken(confirmSixDigitCodeDto: ConfirmSixDigitCodeDto) {
+
+    try {
+
+      const sixDigitTokenExists = await prisma.user.findFirst({
+        where: {
+          token: confirmSixDigitCodeDto.token
+        }
+      })
+
+      if (!sixDigitTokenExists) {
+        throw CustomError.badRequest('Invalid token')
+      }
+
+      const user = await prisma.user.update({
+        where: {
+          id: sixDigitTokenExists.id
+        },
+        data: {
+          confirmed: true,
+          token: null
+        }
+      })
+
+      return user
+    } catch (error) {
+      console.log(error);
+      if (error instanceof CustomError) {
+        throw error;
+      }
+      throw CustomError.internalServer(`${error}`)
+    }
   }
 
   private async generateTokenService(id: string) {
