@@ -1,3 +1,4 @@
+import { Budget } from '@prisma/client';
 import { prisma } from '../../data/prisma/prisma-db';
 import {
   BudgetEntity,
@@ -25,28 +26,15 @@ export class Budgetservice {
     return budgetsEntity;
   }
 
-  async getBudgetById(getBudgetByIdDto: GetBudgetByIdDto) {
-    const { id } = getBudgetByIdDto;
-    const budget = await prisma.budget.findUnique({
-      where: { id },
-    });
-    if (!budget) {
-      throw CustomError.notFound('Budget not found');
-    }
-
+  async getBudgetById(budget: Budget) {
     return BudgetEntity.fromJson(budget);
   }
 
-  async updateBudget(updateBudgetDto: UpdateBudgetDto) {
-    const { id, name, amount } = updateBudgetDto;
-    const budgetExists = await prisma.budget.findUnique({
-      where: { id },
-    });
-    if (!budgetExists) {
-      throw CustomError.notFound('Budget not found');
-    }
+  async updateBudget(budgetId: string, updateBudgetDto: UpdateBudgetDto) {
+    const { name, amount } = updateBudgetDto;
+
     const budget = await prisma.budget.update({
-      where: { id },
+      where: { id: budgetId },
       data: { name, amount },
     });
     return BudgetEntity.fromJson(budget);

@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { CreaateBudgetDto, CustomError, GetBudgetByIdDto, UpdateBudgetDto } from '../../domain';
+import {
+  CreaateBudgetDto,
+  CustomError,
+  GetBudgetByIdDto,
+  UpdateBudgetDto,
+} from '../../domain';
 import { Budgetservice } from './budgets.service';
 
 export class BudgetController {
@@ -34,29 +39,21 @@ export class BudgetController {
   };
 
   getBudgetById = (req: Request, res: Response) => {
-    const { id } = req.params;
-    const [error, getBudgetByIdDto] = GetBudgetByIdDto.create({ id });
-    if (error) {
-      res.status(400).json({ error });
-      return;
-    }
-
     this.budgetService
-      .getBudgetById(getBudgetByIdDto!)
+      .getBudgetById(req.budget!)
       .then((budget) => res.json(budget))
       .catch((error) => this.handleError(error, res));
   };
 
   updateBudget = (req: Request, res: Response) => {
-    const { id } = req.params;
-    const [error, updateBudgetDto] = UpdateBudgetDto.create({ ...req.body, id });
+    const [error, updateBudgetDto] = UpdateBudgetDto.create(req.body);
     if (error) {
       res.status(400).json({ error });
       return;
     }
 
     this.budgetService
-      .updateBudget(updateBudgetDto!)
+      .updateBudget(req.budget?.id!, updateBudgetDto!)
       .then((budget) => res.json(budget))
       .catch((error) => this.handleError(error, res));
   };
@@ -73,6 +70,5 @@ export class BudgetController {
       .deleteBudget(getBudgetByIdDto!)
       .then(() => res.json({ message: 'Budget deleted' }))
       .catch((error) => this.handleError(error, res));
-  }
-
+  };
 }
