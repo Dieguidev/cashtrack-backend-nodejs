@@ -3,6 +3,7 @@ import colors from 'colors'
 import cors from 'cors'
 import { corsConfig } from '../config/cors';
 import morgan from 'morgan';
+import { errorHandler } from './middlewares/error-json-invalid.middleware';
 
 interface Options {
   port?: number;
@@ -33,6 +34,9 @@ export class Server {
 
     //rutas
     this.app.use(this.routes);
+
+    // Middleware de manejo de errores
+    this.app.use(errorHandler);
 
     this.app.listen(this.port, () => {
       console.log(colors.cyan.bold(`Server is running on port ${this.port}`))
