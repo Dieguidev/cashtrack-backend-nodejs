@@ -12,7 +12,7 @@ interface Options {
 
 export class Server {
 
-  private readonly app = express()
+  public readonly app = express()
   private readonly port: number;
   private readonly routes: Router;
 

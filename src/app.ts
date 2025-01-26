@@ -11,7 +11,7 @@ import { Server } from "./presentation/server";
 
 async function main() {
 
-  await PrismaDatabase.connect();
+  // await PrismaDatabase.connect();
 
   new Server({
     port: envs.port,
