@@ -9,8 +9,8 @@ export class BudgetEntity {
     public readonly amount: number,
     public readonly userId: string,
     public readonly expenses: ExpenseEntity[] = [],
-    public readonly createdAt: Date,
-    public readonly updatedAt: Date
+    public readonly createdAt: string,
+    public readonly updatedAt: string
   ) {}
 
   static fromJson(object: { [key: string]: any }): BudgetEntity {

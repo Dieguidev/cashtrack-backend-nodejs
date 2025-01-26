@@ -6,8 +6,8 @@ export class ExpenseEntity {
     public readonly name: string,
     public readonly amount: number,
     public readonly budgetId: string,
-    public readonly createdAt: Date,
-    public readonly updatedAt: Date
+    public readonly createdAt: string,
+    public readonly updatedAt: string
   ) {}
 
   static fromJson(object: { [key: string]: any }): ExpenseEntity {

@@ -34,7 +34,11 @@ export class BudgetController {
   getAllBudgets = (req: Request, res: Response) => {
     this.budgetService
       .getAllBudgets(req.user?.id!)
-      .then((budgets) => res.json(budgets))
+      .then((budgets) =>{
+        // console.log('Budgets in controller:', budgets);
+        res.json(budgets)
+
+      })
       .catch((error) => this.handleError(error, res));
   };
 
