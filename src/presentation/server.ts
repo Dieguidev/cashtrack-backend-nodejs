@@ -12,7 +12,7 @@ interface Options {
 
 export class Server {
 
-  public readonly app = express()
+  private readonly app = express()
   private readonly port: number;
   private readonly routes: Router;
 
@@ -28,7 +28,7 @@ export class Server {
 
     this.app.use(morgan('dev'));
 
-    // //middlewares
+    //middlewares
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
