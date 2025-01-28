@@ -30,6 +30,11 @@ export class CustomError extends Error {
   }
 
 
+  static conflict(message: string){
+    return new CustomError(409, message);
+  }
+
+
   static internalServer(message: string= 'Internal Server Error'){
     console.log(message);
 

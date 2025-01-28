@@ -29,7 +29,7 @@ export class AuthService {
     const existEmail = await prisma.user.findUnique({ where: { email } });
 
     if (existEmail) {
-      throw CustomError.badRequest('Email already exists');
+      throw CustomError.conflict('Email already exists');
     }
 
     try {
