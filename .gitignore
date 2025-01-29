@@ -6,3 +6,4 @@ build/
 
 mongo/
 coverage/
+.env.test
