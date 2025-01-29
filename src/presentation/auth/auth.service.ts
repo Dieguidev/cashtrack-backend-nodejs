@@ -224,10 +224,10 @@ export class AuthService {
       <h1>Valida tu email</h1>
       <p>Hola: ${user.name}, has solicitado reestablecer tu password.</p>
       <p>Visita el siguiente enlace:</p>
+      <a href="${envs.frontendUrl}/auth/new-password">Reestablecer Password</a>
       <p>Ingresa el código: <b>${user.token}</b></p>
       <p>Exte token expira en 10 minutos</p>
       `;
-    // <a href="${envs.FRONTEND_URL}/auth/new-password">Reestablecer Password</a>
 
     const options = {
       to: user.email,
