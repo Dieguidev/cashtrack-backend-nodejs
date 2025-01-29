@@ -43,6 +43,7 @@ export class EmailService {
       if (!this.postToProvider) return true;
 
       const sendInformation = await this.transporter.sendMail({
+        from: 'CashTrackr <admin@cashtrackr.com>',
         to,
         subject,
         html,

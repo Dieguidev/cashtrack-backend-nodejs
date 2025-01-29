@@ -1,5 +1,5 @@
 import { prisma } from '../../data/prisma/prisma-db';
-import { BcryptAdapter, JwtAdapter } from '../../config';
+import { BcryptAdapter, envs, JwtAdapter } from '../../config';
 import {
   ConfirmSixDigitCodeDto,
   CustomError,
@@ -260,16 +260,16 @@ export class AuthService {
   private async sendEmailValidationSixdigitToken(user: IEmail) {
     const html = `
       <h1>Valida tu email</h1>
-      <p>Hola: ${user.name}, has creado tu cuenta, ya casi esta todo listo, solo debes confirmar tu cuenta </p>
+      <p>Hola: ${user.name}, has creado tu cuenta en CashTracker, ya casi esta todo listo, solo debes confirmar tu cuenta </p>
       <p>Visita el siguiente enlace:</p>
+      <a href="${envs.frontendUrl}/auth/confirm-account">Confirmar cuenta</a>
       <p>Ingresa el código: <b>${user.token}</b></p>
-      <p>Exte token expira en 10 minutos</p>
       `;
-    // <a href="${envs.FRONTEND_URL}/auth/confirm-account">Confirmar cuenta</a>
 
+      // <p>Exte token expira en 10 minutos</p>
     const options = {
       to: user.email,
-      subject: 'Confirma tu cuenta',
+      subject: 'CashTrackr - Confirma tu cuenta',
       html,
     };
 
