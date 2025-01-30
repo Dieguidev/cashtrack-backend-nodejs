@@ -60,7 +60,7 @@ export class AuthController {
 
     this.authService
       .confirmSixDigitToken(confirmSixDigitCodeDto!)
-      .then((user) => res.json(user))
+      .then((user) => res.json({user}))
       .catch((error) => this.handleError(error, res));
   };
 

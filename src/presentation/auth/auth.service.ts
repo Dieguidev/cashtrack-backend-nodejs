@@ -100,7 +100,7 @@ export class AuthService {
       });
 
       if (!sixDigitTokenExists) {
-        throw CustomError.badRequest('Invalid token');
+        throw CustomError.unauthorized('Invalid token');
       }
 
       const user = await prisma.user.update({
@@ -115,7 +115,7 @@ export class AuthService {
 
       return UserEntity.fromJson(user);
     } catch (error) {
-      console.log(error);
+
       if (error instanceof CustomError) {
         throw error;
       }
