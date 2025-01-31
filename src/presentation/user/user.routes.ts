@@ -11,8 +11,6 @@ export class UserRoutes {
     const userService = new UserService();
     const controller = new UserController(userService);
 
-    router.use(limiter);
-
     router.get(
       '/get-user-login',
       [AuthMiddleware.validateJWT],

@@ -19,7 +19,7 @@ export class UserController {
     // res.json(req.user);
     this.userService
         .getUserByJWT(req.user!)
-        .then((user) => res.json(user))
+        .then((user) => res.json({user}))
         .catch((error) => this.handleError(error, res));
   };
 
