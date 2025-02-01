@@ -16,8 +16,6 @@ export class BudgetEntity {
   static fromJson(object: { [key: string]: any }): BudgetEntity {
     const { id, name, amount, expenses, userId, createdAt, updatedAt } = object;
 
-    console.log(object);
-
     if (!id) throw CustomError.badRequest('Missing ID');
     if (!name) throw CustomError.badRequest('Missing name');
     if (!amount) throw CustomError.badRequest('Missing amount');
