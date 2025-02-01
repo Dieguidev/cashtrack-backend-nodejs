@@ -3,8 +3,6 @@ import { prisma } from '../../data/prisma/prisma-db';
 import {
   BudgetEntity,
   CreaateBudgetDto,
-  CustomError,
-  GetBudgetByIdDto,
   UpdateBudgetDto,
 } from '../../domain';
 

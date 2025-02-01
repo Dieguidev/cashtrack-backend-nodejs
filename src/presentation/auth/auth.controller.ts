@@ -73,7 +73,7 @@ export class AuthController {
 
     this.authService
       .forgotPassword(forgotPasswordDto!)
-      .then((user) => res.json(user))
+      .then((message) => res.json({message}))
       .catch((error) => this.handleError(error, res));
   };
 

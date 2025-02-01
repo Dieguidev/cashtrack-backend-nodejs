@@ -128,7 +128,7 @@ export class AuthService {
     try {
       const existUser = await prisma.user.findUnique({ where: { email } });
       if (!existUser) {
-        throw CustomError.badRequest('User not exist');
+        throw CustomError.notFound('User not exist');
       }
 
       const result = await prisma.$transaction(async (prisma) => {
@@ -149,9 +149,7 @@ export class AuthService {
         });
         return updateUser;
       });
-      return {
-        user: UserEntity.fromJson(result),
-      };
+      return "Email sent";
     } catch (error) {
       if (error instanceof CustomError) {
         throw error;
@@ -170,7 +168,7 @@ export class AuthService {
         },
       });
       if (!user) {
-        throw CustomError.badRequest('Invalid token');
+        throw CustomError.notFound('Invalid token');
       }
 
       return 'Token is valid';
