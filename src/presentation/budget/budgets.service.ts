@@ -19,6 +19,13 @@ export class Budgetservice {
     const budgets = await prisma.budget.findMany({
       where: { userId },
       orderBy: { createdAt: 'desc' },
+      include: {
+        User: {
+          select: {
+            id: true,
+          },
+        }
+      }
     });
     const budgetsEntity = budgets.map((budget) =>
       BudgetEntity.fromJson(budget)
@@ -36,6 +43,13 @@ export class Budgetservice {
     const budget = await prisma.budget.update({
       where: { id: budgetId },
       data: { name, amount },
+      include: {
+        User: {
+          select: {
+            id: true,
+          },
+        }
+      }
     });
     return BudgetEntity.fromJson(budget);
   }
@@ -43,6 +57,13 @@ export class Budgetservice {
   async deleteBudget(budgetId: string) {
     const budget = await prisma.budget.delete({
       where: { id: budgetId },
+      include: {
+        User: {
+          select: {
+            id: true,
+          },
+        }
+      }
     });
     return BudgetEntity.fromJson(budget);
   }
