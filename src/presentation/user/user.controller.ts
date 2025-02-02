@@ -43,7 +43,7 @@ export class UserController {
     }
 
     this.userService.checkPassword(checkPasswordDto!, req.user!)
-      .then((rpta) => res.json(rpta))
+      .then((rpta) => res.json({rpta}))
       .catch((error) => this.handleError(error, res));
   }
 }
