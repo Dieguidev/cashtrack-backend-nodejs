@@ -19,12 +19,22 @@ export class ExpenseMiddleware {
   ) => {
     const { expenseId, budgetId } = req.params;
     if (!expenseId) {
-      res.status(400).json({ error: 'Missing id' });
+      res.status(400).json({ error: 'Missing expenseId' });
       return;
     }
 
     if (!UUIDAdapter.validate(expenseId)) {
-      res.status(400).json({ error: 'Invalid Id' });
+      res.status(400).json({ error: 'Invalid expenseId' });
+      return;
+    }
+
+    if (!budgetId) {
+      res.status(400).json({ error: 'Missing budgetId' });
+      return;
+    }
+
+    if (!UUIDAdapter.validate(budgetId)) {
+      res.status(400).json({ error: 'Invalid budgetId' });
       return;
     }
     try {
