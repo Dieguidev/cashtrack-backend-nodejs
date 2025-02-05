@@ -18,7 +18,7 @@ export class UserRoutes {
     );
     router.post('/update-password', [AuthMiddleware.validateJWT], controller.updateCurrentUserPassword)
     router.post('/check-password', [AuthMiddleware.validateJWT], controller.checkPassword)
-    router.post('/update-user', [AuthMiddleware.validateJWT], controller.updateUser)
+    router.put('/update-user', [AuthMiddleware.validateJWT], controller.updateUser)
 
     return router;
   }
