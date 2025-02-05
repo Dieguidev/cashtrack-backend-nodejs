@@ -3,7 +3,7 @@ import { UUIDAdapter, Validators } from '../../../config';
 export class UpdateUserDto {
   private constructor(
     public name?: string,
-    public email?: number
+    public email?: string
   ) {}
 
   static create(object: {
