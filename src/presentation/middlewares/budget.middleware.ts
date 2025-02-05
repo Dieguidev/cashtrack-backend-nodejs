@@ -62,6 +62,7 @@ export class BudgetMiddleware {
       res
         .status(401)
         .json({ error: 'You are not authorized to view this budget' });
+      return;
     }
     next();
   };
