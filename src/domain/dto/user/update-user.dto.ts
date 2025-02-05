@@ -1,6 +1,6 @@
 import { UUIDAdapter, Validators } from '../../../config';
 
-export class UpdateBudgetDto {
+export class UpdateUserDto {
   private constructor(
     public name?: string,
     public email?: number
@@ -8,7 +8,7 @@ export class UpdateBudgetDto {
 
   static create(object: {
     [key: string]: any;
-  }): [{ [key: string]: string }?, UpdateBudgetDto?] {
+  }): [{ [key: string]: string }?, UpdateUserDto?] {
     const { name, email } = object;
 
     const errors: { [key: string]: string } = {};
@@ -24,6 +24,6 @@ export class UpdateBudgetDto {
       return [errors];
     }
 
-    return [undefined, new UpdateBudgetDto(name, email)];
+    return [undefined, new UpdateUserDto(name, email)];
   }
 }

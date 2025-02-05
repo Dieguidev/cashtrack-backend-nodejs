@@ -21,3 +21,4 @@ export * from './dto/auth/validate-code-from-reset-password.dt';
 export * from './dto/auth/update-forgot-password.dto';
 export * from './dto/user/update-current-user-password.dto';
 export * from './dto/user/check-password.dto';
+export * from './dto/user/update-user.dto';
