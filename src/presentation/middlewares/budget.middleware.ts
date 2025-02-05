@@ -61,7 +61,7 @@ export class BudgetMiddleware {
     if (budget?.userId !== user?.id) {
       res
         .status(401)
-        .json({ error: 'You are not authorized to view this budget' });
+        .json({ error: 'You are not authorized to access this resource' });
       return;
     }
     next();
